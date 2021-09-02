@@ -6,26 +6,54 @@
 //
 
 import SwiftUI
+import CoreImage
+import CoreImage.CIFilterBuiltins
 
 struct ContentView: View {
-    @State private var showingActionSheet = false
-    @State private var backgroundColor = Color.white
+    @State private var image: Image?
 
     var body: some View {
-        Text("Hello, World!")
-            .frame(width: 300, height: 300)
-            .background(backgroundColor)
-            .onTapGesture {
-                self.showingActionSheet = true
-            }
-            .actionSheet(isPresented: $showingActionSheet) {
-                ActionSheet(title: Text("Change background"), message: Text("Select a new color"), buttons: [
-                    .default(Text("Red")) { self.backgroundColor = .red },
-                    .default(Text("Green")) { self.backgroundColor = .green },
-                    .default(Text("Blue")) { self.backgroundColor = .blue },
-                    .cancel()
-                ])
-            }
+        VStack {
+            image?
+                .resizable()
+                .scaledToFit()
+        }
+        .onAppear(perform: loadImage)
+    }
+
+    func loadImage() {
+        guard let inputImage = UIImage(named: "Example") else { return }
+        let beginImage = CIImage(image: inputImage)
+        let context = CIContext()
+        
+//        let currentFilter = CIFilter.sepiaTone()
+//        currentFilter.inputImage = beginImage
+//        currentFilter.intensity = 1
+        
+//        let currentFilter = CIFilter.pixellate()
+//        currentFilter.inputImage = beginImage
+//        currentFilter.scale = 100
+        
+//        let currentFilter = CIFilter.crystallize()
+//        currentFilter.inputImage = beginImage
+//        currentFilter.radius = 200
+        
+        let currentFilter = CIFilter.twirlDistortion()
+        currentFilter.inputImage = beginImage
+        currentFilter.radius = 400
+        currentFilter.center = CGPoint(x: inputImage.size.width / 2, y: inputImage.size.height / 2)
+        
+        // get a CIImage from our filter or exit if that fails
+        guard let outputImage = currentFilter.outputImage else { return }
+        
+        // attempt to get a CGImage from our CIImage
+        if let cgimg = context.createCGImage(outputImage, from: outputImage.extent) {
+            // convert that to a UIImage
+            let uiImage = UIImage(cgImage: cgimg)
+            
+            // and convert that to a SwiftUI image
+            image = Image(uiImage: uiImage)
+        }
     }
 }
 
