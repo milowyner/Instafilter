@@ -59,7 +59,7 @@ struct ContentView: View {
                 }.padding(.vertical)
 
                 HStack {
-                    Button("Change Filter") {
+                    Button("\(CIFilter.localizedName(forFilterName: currentFilter.name) ?? "Filter")") {
                         showingFilterSheet = true
                     }
 
@@ -92,16 +92,17 @@ struct ContentView: View {
                 ImagePicker(image: self.$inputImage)
             }
             .actionSheet(isPresented: $showingFilterSheet) {
-                ActionSheet(title: Text("Select a filter"), buttons: [
-                    .default(Text("Crystallize")) { self.setFilter(CIFilter.crystallize()) },
-                    .default(Text("Edges")) { self.setFilter(CIFilter.edges()) },
-                    .default(Text("Gaussian Blur")) { self.setFilter(CIFilter.gaussianBlur()) },
-                    .default(Text("Pixellate")) { self.setFilter(CIFilter.pixellate()) },
-                    .default(Text("Sepia Tone")) { self.setFilter(CIFilter.sepiaTone()) },
-                    .default(Text("Unsharp Mask")) { self.setFilter(CIFilter.unsharpMask()) },
-                    .default(Text("Vignette")) { self.setFilter(CIFilter.vignette()) },
-                    .cancel()
-                ])
+                ActionSheet(title: Text("Select a filter"), buttons: ([
+                    CIFilter.crystallize(),
+                    CIFilter.edges(),
+                    CIFilter.gaussianBlur(),
+                    CIFilter.pixellate(),
+                    CIFilter.sepiaTone(),
+                    CIFilter.unsharpMask(),
+                    CIFilter.vignette()
+                ] as [CIFilter]).map { filter in
+                    .default(Text(name(of: filter))) { setFilter(filter) }
+                } + [.cancel()])
             }
             .alert(isPresented: $showingErrorAlert, content: {
                 Alert(title: Text("Error"), message: Text("No image selected"))
@@ -138,6 +139,10 @@ struct ContentView: View {
     func setFilter(_ filter: CIFilter) {
         currentFilter = filter
         loadImage()
+    }
+    
+    func name(of filter: CIFilter) -> String {
+        CIFilter.localizedName(forFilterName: filter.name) ?? ""
     }
 }
 
