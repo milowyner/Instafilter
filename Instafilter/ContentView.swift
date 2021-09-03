@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var inputImage: UIImage?
     @State private var processedImage: UIImage?
     @State private var filterIntensity = 0.5
+    @State private var filterRadius = 0.5
+    @State private var filterScale = 0.5
     @State private var showingImagePicker = false
     @State private var showingFilterSheet = false
     @State private var currentFilter: CIFilter = CIFilter.sepiaTone()
@@ -23,15 +25,20 @@ struct ContentView: View {
     let context = CIContext()
     
     var body: some View {
-        let intensity = Binding<Double>(
-            get: {
-                self.filterIntensity
-            },
-            set: {
-                self.filterIntensity = $0
-                self.applyProcessing()
-            }
-        )
+        let intensity = Binding<Double>(get: { filterIntensity }, set: {
+            filterIntensity = $0
+            applyProcessing()
+        })
+        
+        let radius = Binding<Double>(get: { filterRadius }, set: {
+            filterRadius = $0
+            applyProcessing()
+        })
+        
+        let scale = Binding<Double>(get: { filterScale }, set: {
+            filterScale = $0
+            applyProcessing()
+        })
         
         return NavigationView {
             VStack {
@@ -54,9 +61,19 @@ struct ContentView: View {
                 }
 
                 HStack {
-                    Text("Intensity")
-                    Slider(value: intensity)
-                }.padding(.vertical)
+                    VStack(alignment: .leading) {
+                        Text("Intensity").frame(maxHeight: .infinity)
+                        Text("Radius").frame(maxHeight: .infinity)
+                        Text("Scale").frame(maxHeight: .infinity)
+                    }
+                    VStack {
+                        Slider(value: intensity)
+                        Slider(value: radius)
+                        Slider(value: scale)
+                    }
+                }
+                .padding(.vertical)
+                .fixedSize(horizontal: false, vertical: true)
 
                 HStack {
                     Button("\(CIFilter.localizedName(forFilterName: currentFilter.name) ?? "Filter")") {
@@ -121,8 +138,8 @@ struct ContentView: View {
     func applyProcessing() {
         let inputKeys = currentFilter.inputKeys
         if inputKeys.contains(kCIInputIntensityKey) { currentFilter.setValue(filterIntensity, forKey: kCIInputIntensityKey) }
-        if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(filterIntensity * 200, forKey: kCIInputRadiusKey) }
-        if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(filterIntensity * 100, forKey: kCIInputScaleKey) }
+        if inputKeys.contains(kCIInputRadiusKey) { currentFilter.setValue(filterRadius * 200, forKey: kCIInputRadiusKey) }
+        if inputKeys.contains(kCIInputScaleKey) { currentFilter.setValue(filterScale * 100, forKey: kCIInputScaleKey) }
         if currentFilter.name == "CIEdges" {
             currentFilter.setValue(filterIntensity * 200, forKey: kCIInputIntensityKey)
         }
