@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		05000EC626E1BC3300DEFC51 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05000EC526E1BC3300DEFC51 /* ImagePicker.swift */; };
-		0555484826E2C0950014CEFF /* SwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0555484726E2C0950014CEFF /* SwiftUIView.swift */; };
 		0563DF2C26E15310007EC604 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0563DF2B26E15310007EC604 /* AppDelegate.swift */; };
 		0563DF2E26E15310007EC604 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0563DF2D26E15310007EC604 /* SceneDelegate.swift */; };
 		0563DF3026E15310007EC604 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0563DF2F26E15310007EC604 /* ContentView.swift */; };
@@ -20,7 +19,6 @@
 
 /* Begin PBXFileReference section */
 		05000EC526E1BC3300DEFC51 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
-		0555484726E2C0950014CEFF /* SwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIView.swift; sourceTree = "<group>"; };
 		0563DF2826E15310007EC604 /* Instafilter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Instafilter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0563DF2B26E15310007EC604 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0563DF2D26E15310007EC604 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 				0563DF2B26E15310007EC604 /* AppDelegate.swift */,
 				0563DF2D26E15310007EC604 /* SceneDelegate.swift */,
 				0563DF2F26E15310007EC604 /* ContentView.swift */,
-				0555484726E2C0950014CEFF /* SwiftUIView.swift */,
 				05000EC526E1BC3300DEFC51 /* ImagePicker.swift */,
 				05EB889626E1E9940022C29B /* ImageSaver.swift */,
 				0563DF3126E15312007EC604 /* Assets.xcassets */,
@@ -156,7 +153,6 @@
 			files = (
 				0563DF2C26E15310007EC604 /* AppDelegate.swift in Sources */,
 				05000EC626E1BC3300DEFC51 /* ImagePicker.swift in Sources */,
-				0555484826E2C0950014CEFF /* SwiftUIView.swift in Sources */,
 				05EB889726E1E9940022C29B /* ImageSaver.swift in Sources */,
 				0563DF2E26E15310007EC604 /* SceneDelegate.swift in Sources */,
 				0563DF3026E15310007EC604 /* ContentView.swift in Sources */,
