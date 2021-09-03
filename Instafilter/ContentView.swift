@@ -17,6 +17,9 @@ struct ContentView: View {
     @State private var showingImagePicker = false
     @State private var showingFilterSheet = false
     @State private var currentFilter: CIFilter = CIFilter.sepiaTone()
+    
+    @State private var showingErrorAlert = false
+    
     let context = CIContext()
     
     var body: some View {
@@ -63,7 +66,10 @@ struct ContentView: View {
                     Spacer()
 
                     Button("Save") {
-                        guard let processedImage = processedImage else { return }
+                        guard let processedImage = processedImage else {
+                            showingErrorAlert = true
+                            return
+                        }
                         
                         let imageSaver = ImageSaver()
                         
@@ -97,6 +103,9 @@ struct ContentView: View {
                     .cancel()
                 ])
             }
+            .alert(isPresented: $showingErrorAlert, content: {
+                Alert(title: Text("Error"), message: Text("No image selected"))
+            })
         }
     }
     
